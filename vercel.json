@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "My-Portolio/wsgi.py",
+        "src": "My-Portfolio/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "50mb" }
       }
@@ -10,7 +10,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "My-Portolio/wsgi.py"
+        "dest": "My-Portfolio/wsgi.py"
       }
     ]
   }
