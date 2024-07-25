@@ -1,0 +1,22 @@
+{% extend 'static/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="main-container">
+    <h1>Posts</h1>
+    <div class="post-container">
+
+        <div>
+            <div class="post">
+                <img class="thumbnail" src="{% static 'images/Personal-Blog.png' %}" alt="">
+                <div class="post-details">
+                    <h6 class="post-title">Personal-Blog-Website</h6>
+                    <p class="post-intro">A Personal blog website built using Django, HTML, CSS, and Python. It allows you to manage your blog content through...</p>
+                    <a href="#">Read More</a>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+{% endblock content %}
