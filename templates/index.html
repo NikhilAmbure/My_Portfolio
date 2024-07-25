@@ -23,8 +23,18 @@
             </div>
 
             <div class="intro-container">
-                
-                {% include 'navigation.html' %}
+                <div class="nav-container">
+                    <div class="dots-container">
+                        <div id="dot-1" class="dots"></div>
+                        <div id="dot-2" class="dots"></div>
+                        <div id="dot-3" class="dots"></div>
+                    </div>
+
+                    <ul id="navigation">
+                        <li><a target="" href="#">Resume</a></li>
+                        <!-- <li><a href="">Contact</a></li> -->
+                    </ul>
+                </div>
 
                 <div class="left-column">
                     <img id="profile_pic" src="{% static '/images/profile_pic (1).jpg' %}">
@@ -60,9 +70,10 @@
             <div class="about-container">
                 <div class="about-me">
                     <h4>More about me</h4>
-                    <p>I’m Nikhil Ambure, a full-stack developer skilled in Django and Python. I build dynamic web applications that are reliable and resilient. I focus on creating robust solutions that handle errors gracefully and perform consistently across different scenarios.</p>
+                    <p>Hi, I’m Nikhil Ambure, a dedicated full-stack developer with expertise in Django and Python. I specialize in building dynamic and responsive websites that focus on both user experience and functionality.
+                    </p>
 
-                    <p>Outside of development, I’m passionate about exploring new technologies and continually honing my skills. </p>
+                    <p>Currently, I am pursuing a B.Tech in Computer Science at DBATU University, Lonere.</p>
 
                     <hr>
                     <h4>SKILLS</h4>
@@ -88,7 +99,7 @@
 
 
                 <div class="social-links">
-                    <img id='social-img' src="{% static '/images/MergedImages.png' %}" >
+                    <img id='social-img' src="{% static '/images/Socials.png' %}" >
                     <h3>Find me on Twitter, Github, LinkedIn & Reddit</h3>
 
                     <a target="_blank" href="https://x.com/N1kh1l_A0">Twitter: @n1kh1l_a0</a>
@@ -113,7 +124,7 @@
                         <div class="post-details">
                             <h6 class="post-title">Personal-Blog-Website</h6>
                             <p class="post-intro">A Personal blog website built using Django, HTML, CSS, and Python. It allows you to manage your blog content through...</p>
-                            <a href="https://github.com/NikhilAmbure/Personal-Blog-Website">Read More</a>
+                            <a href="https://github.com/NikhilAmbure/Personal-Blog-Website" target="_blank">Read More</a>
                         </div>
                     </div>
                 </div>
@@ -135,7 +146,7 @@
                         <div class="post-details">
                             <h6 class="post-title">Django-Todo-List</h6>
                             <p class="post-intro">This is a simple To-Do List web application built using Django, HTML, CSS, Python, and Bootstrap. The project explores CRUD ...</p>
-                            <a href="https://github.com/NikhilAmbure/Django-To-do-List">Read More</a>
+                            <a href="https://github.com/NikhilAmbure/Django-To-do-List" target="_blank">Read More</a>
                         </div>
                     </div>
                 </div>
