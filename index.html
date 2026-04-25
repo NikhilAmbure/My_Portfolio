@@ -1,669 +1,1347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikhil Ambure</title>
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/ios-filled/50/FA5252/source-code.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
-        
-        * {
-            font-family: 'Rajdhani', sans-serif;
-        }
-        
-        .orbitron {
-            font-family: 'Orbitron', monospace;
-        }
-        
-        .racing-grid {
-            background-image: 
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-        
-        .racing-stripe {
-            background: linear-gradient(45deg, #ff0000, #ff4444, #ff0000);
-            background-size: 20px 20px;
-            animation: stripe-move 2s linear infinite;
-        }
-        
-        @keyframes stripe-move {
-            0% { background-position: 0 0; }
-            100% { background-position: 20px 20px; }
-        }
-        
-        .speed-blur {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .speed-blur::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: speed-effect 3s ease-in-out infinite;
-        }
-        
-        @keyframes speed-effect {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
-        }
-        
-        .neon-glow {
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 0 40px rgba(255, 0, 0, 0.3);
-        }
-        
-        .car-animation {
-            animation: car-move 4s ease-in-out infinite;
-        }
-        
-        @keyframes car-move {
-            0%, 100% { transform: translateX(0) rotate(0deg); }
-            25% { transform: translateX(20px) rotate(2deg); }
-            75% { transform: translateX(-20px) rotate(-2deg); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 1s ease-out forwards;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .slide-in-left {
-            animation: slideInLeft 0.8s ease-out forwards;
-        }
-        
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .typing-effect {
-            overflow: hidden;
-            border-right: 2px solid #ff0000;
-            white-space: nowrap;
-            animation: typing 3s steps(30) 1s forwards, blink 1s infinite;
-        }
-        
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nikhil Ambure — Python Full Stack Developer</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2306060a'/%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%2300ff88' stroke-width='1' stroke-dasharray='3 3' opacity='0.4'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' fill='%2300ff88' font-family='monospace' font-weight='800' font-size='13'%3ENA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        section {
-            position: relative;
-            z-index: 1;
-            will-change: transform;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-        }
-    </style>
+<style>
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --bg:       #06060a;
+    --bg2:      #0d0d14;
+    --surface:  #111118;
+    --border:   rgba(255,255,255,0.07);
+    --glow:     #00ff88;
+    --blue:     #4d8fff;
+    --pink:     #ff4d8f;
+    --text:     #e8e8f0;
+    --muted:    #5a5a72;
+    --dim:      #2a2a3a;
+    --font-display: 'Syne', sans-serif;
+    --font-mono:    'Space Mono', monospace;
+    --font-body:    'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  ::selection { background: var(--glow); color: #000; }
+
+  /* ── CUSTOM CURSOR ── */
+  #cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--glow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+  }
+  #cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--glow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+    opacity: 0.5;
+  }
+  body:has(a:hover) #cursor { width: 20px; height: 20px; background: var(--pink); }
+  body:has(a:hover) #cursor-ring { width: 50px; height: 50px; border-color: var(--pink); }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  /* ── GRID BG ── */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(6,6,10,0.95), transparent);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--glow);
+    letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none;
+  }
+  .nav-logo-dot {
+    width: 8px; height: 8px;
+    background: var(--glow);
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--glow);
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(0.7); }
+  }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--glow);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--glow); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #000;
+    background: var(--glow);
+    padding: 9px 20px;
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+    box-shadow: 0 0 20px rgba(0,255,136,0.2);
+  }
+  .nav-cta:hover { box-shadow: 0 0 30px rgba(0,255,136,0.5); transform: translateY(-1px); }
+
+  /* ── MAIN WRAPPER ── */
+  main { position: relative; z-index: 2; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--glow);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0;
+    animation: fade-up 0.6s ease forwards 0.2s;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--glow);
+    display: inline-block;
+  }
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(60px, 9vw, 120px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fade-up 0.7s ease forwards 0.4s;
+  }
+  .hero-name .green { color: var(--glow); }
+  .hero-name .outline {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+    color: transparent;
+  }
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fade-up 0.7s ease forwards 0.6s;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-actions {
+    display: flex; align-items: center; gap: 24px;
+    opacity: 0;
+    animation: fade-up 0.7s ease forwards 0.8s;
+  }
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #000;
+    background: var(--glow);
+    padding: 14px 28px;
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: all 0.25s;
+    box-shadow: 0 0 24px rgba(0,255,136,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,255,136,0.5); }
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--text); }
+  .btn-ghost .arrow { transition: transform 0.2s; }
+  .btn-ghost:hover .arrow { transform: translateX(4px); }
+
+  /* Hero decorative blob */
+  .hero-blob {
+    position: absolute;
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    animation: blob-float 8s ease-in-out infinite;
+  }
+  @keyframes blob-float {
+    0%,100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-55%) scale(1.05); }
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px; left: 48px;
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fade-up 0.7s ease forwards 1.2s;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--glow), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 100px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--glow);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--glow);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 60px;
+  }
+
+  @keyframes fade-up {
+    from { opacity:0; transform: translateY(24px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── ABOUT SECTION ── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-left { }
+  .about-text {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .about-text strong { color: var(--text); font-weight: 500; }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--glow);
+    border: 1px solid rgba(0,255,136,0.25);
+    padding: 8px 16px;
+    border-radius: 2px;
+    background: rgba(0,255,136,0.04);
+    letter-spacing: 0.1em;
+  }
+  .status-dot {
+    width: 6px; height: 6px;
+    background: var(--glow);
+    border-radius: 50%;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+    box-shadow: 0 0 6px var(--glow);
+  }
+  /* ── BENTO GRID ── */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 12px;
+  }
+  .bento-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .bento-card:hover {
+    border-color: rgba(0,255,136,0.18);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,255,136,0.06);
+  }
+  /* shimmer line on hover */
+  .bento-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glow), transparent);
+    transition: left 0.6s ease;
+  }
+  .bento-card:hover::after { left: 150%; }
+
+  .bento-card.wide { grid-column: 1 / -1; }
+  .bento-card.tall { grid-row: span 2; }
+
+  /* Avatar card */
+  .bento-avatar {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .avatar-ring {
+    position: relative;
+    width: 64px; height: 64px; flex-shrink: 0;
+  }
+  .avatar-ring svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    animation: spin-slow 10s linear infinite;
+  }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  .avatar-initials {
+    position: absolute; inset: 8px;
+    background: linear-gradient(135deg, #0d2010, #0a1a20);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 800;
+    color: var(--glow);
+    letter-spacing: -0.05em;
+  }
+  .avatar-info { flex: 1; min-width: 0; }
+  .avatar-name {
+    font-family: var(--font-display);
+    font-size: 17px; font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .avatar-role {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.08em;
+  }
+
+  /* Location card */
+  .bento-loc {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .bento-loc-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .bento-loc-value {
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .bento-loc-value span { color: var(--glow); }
+  .bento-map-dots {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px;
+  }
+  .map-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--dim);
+    transition: background 0.3s ease;
+  }
+  .map-dot.active { background: var(--glow); box-shadow: 0 0 6px var(--glow); }
+  .bento-card:hover .map-dot { background: rgba(0,255,136,0.2); }
+  .bento-card:hover .map-dot.active { background: var(--glow); }
+
+  /* Focus areas card */
+  .bento-focus-title {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .focus-chips {
+    display: flex; flex-wrap: wrap; gap: 7px;
+  }
+  .focus-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: var(--bg2);
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+  .focus-chip.lit {
+    border-color: rgba(0,255,136,0.3);
+    color: var(--glow);
+    background: rgba(0,255,136,0.05);
+    box-shadow: 0 0 10px rgba(0,255,136,0.08);
+  }
+  .focus-chip:hover {
+    border-color: var(--glow);
+    color: var(--glow);
+    transform: translateY(-1px);
+    box-shadow: 0 0 14px rgba(0,255,136,0.15);
+  }
+
+  /* Activity / vibe card */
+  .bento-vibe {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .vibe-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  .vibe-row:hover { border-color: rgba(0,255,136,0.2); background: rgba(0,255,136,0.03); }
+  .vibe-icon {
+    font-size: 16px;
+    width: 24px; text-align: center;
+    flex-shrink: 0;
+  }
+  .vibe-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+  .vibe-text strong { color: var(--text); font-weight: 500; }
+
+  /* Quote card */
+  .bento-quote {
+    background: linear-gradient(135deg, rgba(0,255,136,0.04), rgba(77,143,255,0.04));
+    border-color: rgba(0,255,136,0.1) !important;
+  }
+  .quote-mark {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--glow);
+    opacity: 0.2;
+    line-height: 1;
+    margin-bottom: -8px;
+  }
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+  .quote-attr {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Social links */
+  .social-row {
+    display: flex; gap: 12px; margin-top: 28px;
+  }
+  .social-link {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.2s;
+  }
+  .social-link:hover {
+    border-color: var(--glow);
+    color: var(--glow);
+    background: rgba(0,255,136,0.05);
+    transform: translateY(-2px);
+  }
+
+  /* ── SKILLS SECTION ── */
+  #stack { max-width: 1100px; }
+  .skills-terminal {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    padding: 12px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .terminal-bar-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    flex: 1; text-align: center;
+  }
+  .terminal-body {
+    padding: 28px 28px 36px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  .t-prompt { color: var(--glow); margin-bottom: 6px; }
+  .t-cmd { color: var(--blue); }
+  .skill-group {
+    margin-top: 28px;
+  }
+  .skill-group-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skill-group-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .skill-tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 7px 14px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: var(--surface);
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-tag::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glow);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .skill-tag:hover {
+    border-color: var(--glow);
+    color: var(--glow);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,255,136,0.12);
+    background: rgba(0,255,136,0.04);
+  }
+  .skill-tag.primary {
+    border-color: rgba(0,255,136,0.3);
+    color: var(--glow);
+    background: rgba(0,255,136,0.04);
+  }
+
+  /* ── PROJECTS LIST ── */
+  #projects { max-width: 1100px; }
+  .projects-list { display: flex; flex-direction: column; }
+
+  .proj-row {
+    border-top: 1px solid var(--border);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    overflow: hidden;
+  }
+  .proj-row:last-child { border-bottom: 1px solid var(--border); }
+
+  /* Green left accent bar */
+  .proj-row::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px; height: 100%;
+    background: var(--glow);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.35s ease;
+  }
+  .proj-row:hover::before { transform: scaleY(1); }
+  .proj-row:hover { background: rgba(0,255,136,0.02); }
+
+  /* Top strip — always visible */
+  .proj-head {
+    display: grid;
+    grid-template-columns: 56px 1fr auto 40px;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 20px 28px 24px;
+    transition: padding 0.3s ease;
+  }
+  .proj-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.15em;
+    transition: color 0.3s ease;
+    user-select: none;
+  }
+  .proj-row:hover .proj-num { color: var(--glow); }
+
+  .proj-name-wrap { min-width: 0; }
+  .proj-name {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 34px);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+  }
+  .proj-row:hover .proj-name { color: var(--glow); transform: translateX(4px); }
+  .proj-badge-inline {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    vertical-align: middle;
+    background: rgba(0,255,136,0.08);
+    color: var(--glow);
+    border: 1px solid rgba(0,255,136,0.2);
+  }
+
+  .proj-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: flex-end;
+  }
+  .proj-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+  }
+  .proj-row:hover .proj-tag { color: var(--text); border-color: rgba(255,255,255,0.12); }
+
+  .proj-arrow {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    font-size: 13px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+  .proj-row:hover .proj-arrow {
+    border-color: var(--glow);
+    color: var(--glow);
+    background: rgba(0,255,136,0.06);
+    transform: rotate(45deg);
+  }
+
+  /* Expandable detail panel */
+  .proj-detail {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease;
+  }
+  .proj-row:hover .proj-detail { grid-template-rows: 1fr; }
+  .proj-detail-inner {
+    overflow: hidden;
+    padding: 0 24px 0 80px;
+  }
+  .proj-detail-content {
+    padding-bottom: 28px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+  }
+  .proj-desc-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+  .proj-link-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #000;
+    background: var(--glow);
+    padding: 10px 18px;
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .proj-link-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,255,136,0.3); }
+
+  @media (max-width: 768px) {
+    .proj-head { grid-template-columns: 40px 1fr 40px; gap: 12px; padding: 20px 16px; }
+    .proj-tags { display: none; }
+    .proj-name { font-size: 22px; }
+    .proj-detail-inner { padding: 0 16px 0 52px; }
+    .proj-detail-content { flex-direction: column; gap: 16px; }
+  }
+  .project-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--glow); }
+
+  /* ── FOOTER / CONTACT ── */
+  #contact {
+    max-width: 1100px;
+    padding: 80px 48px 60px;
+    text-align: center;
+    position: relative;
+  }
+  .contact-glow {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 200px;
+    background: radial-gradient(ellipse, rgba(0,255,136,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contact-big {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .contact-big .outline {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+    color: transparent;
+  }
+  .contact-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 400px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+  .contact-email {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--glow);
+    text-decoration: none;
+    border: 1px solid rgba(0,255,136,0.2);
+    padding: 16px 32px;
+    border-radius: 4px;
+    background: rgba(0,255,136,0.03);
+    transition: all 0.25s;
+    margin-bottom: 60px;
+  }
+  .contact-email:hover {
+    background: rgba(0,255,136,0.08);
+    box-shadow: 0 0 30px rgba(0,255,136,0.15);
+    transform: translateY(-2px);
+  }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .footer-socials { display: flex; gap: 10px; flex-wrap: wrap; }
+  .footer-socials a {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    padding: 7px 13px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: transparent;
+    transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .footer-socials a i, .footer-socials a svg { font-size: 13px; transition: transform 0.25s ease; }
+  .footer-socials a:hover {
+    color: var(--glow);
+    border-color: rgba(0,255,136,0.35);
+    background: rgba(0,255,136,0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,255,136,0.1);
+  }
+  .footer-socials a:hover i,
+  .footer-socials a:hover svg { transform: scale(1.15); }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+  .section-divider hr {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    #hero { padding: 100px 24px 60px; }
+    .hero-blob { display: none; }
+    section { padding: 60px 24px; }
+    #about { grid-template-columns: 1fr; gap: 40px; }
+    .bento-grid { grid-template-columns: 1fr; }
+    .bento-card.wide { grid-column: auto; }
+    .bento-avatar { flex-wrap: wrap; gap: 12px; }
+    .status-badge { margin-left: 0 !important; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { flex-direction: column; }
+    .project-card.featured .project-image { width: 100%; height: 200px; min-height: 200px; }
+    #contact { padding: 60px 24px; }
+    .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+    .footer-socials { justify-content: center; }
+    .scroll-indicator { display: none; }
+    .section-divider { padding: 0 24px; }
+  }
+
+  /* ── TYPING CURSOR ── */
+  .type-cursor {
+    display: inline-block;
+    width: 2px; height: 1em;
+    background: var(--glow);
+    vertical-align: middle;
+    animation: blink 0.9s step-end infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0; } }
+
+  /* ── NUMBER COUNTER ── */
+  .stat-row {
+    display: flex; gap: 48px;
+    margin-top: 40px;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-num span { color: var(--glow); }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 4px;
+  }
+</style>
 </head>
-<body class="bg-black text-white racing-grid min-h-screen">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-sm border-b border-red-600/30">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <div class="orbitron text-2xl font-bold text-red-500">
-                    <i class="fas fa-code mr-2"></i>DEV
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="hover:text-red-500 transition-colors duration-300">HOME</a>
-                    <a href="#about" class="hover:text-red-500 transition-colors duration-300">ABOUT</a>
-                    <a href="#skills" class="hover:text-red-500 transition-colors duration-300">SKILLS</a>
-                    <a href="#projects" class="hover:text-red-500 transition-colors duration-300">PROJECTS</a>
-                    <a href="#contact" class="hover:text-red-500 transition-colors duration-300">CONTACT</a>
-                </div>
-                <button id="mobile-menu" class="md:hidden text-2xl">
-                    <i class="fas fa-bars"></i> 
-                </button>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-nav" class="fixed top-0 left-0 w-full h-full bg-black/95 z-40 transform -translate-x-full transition-transform duration-300 md:hidden">
-        <div class="flex flex-col items-center justify-center h-full space-y-8 text-2xl">
-            <a href="#home" class="mobile-link hover:text-red-500 transition-colors duration-300">HOME</a>
-            <a href="#about" class="mobile-link hover:text-red-500 transition-colors duration-300">ABOUT</a>
-            <a href="#skills" class="mobile-link hover:text-red-500 transition-colors duration-300">SKILLS</a>
-            <a href="#projects" class="mobile-link hover:text-red-500 transition-colors duration-300">PROJECTS</a>
-            <a href="#contact" class="mobile-link hover:text-red-500 transition-colors duration-300">CONTACT</a>
-        </div>
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Grid BG -->
+<div class="grid-bg"></div>
+
+<!-- ════════════════════════════ NAV ════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    NA.dev
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#projects">Projects</a></li>
+  </ul>
+  <a href="mailto:nikhilambure25@gmail.com" class="nav-cta">Say Hello →</a>
+</nav>
+
+<!-- ════════════════════════════ HERO ════════════════════════════ -->
+<main>
+<section id="hero">
+  <div class="hero-eyebrow">Python Full Stack Developer</div>
+
+  <h1 class="hero-name">
+    Nikhil<br>
+    <span class="outline">Ambure</span><span class="green">.</span>
+  </h1>
+
+  <p class="hero-sub">
+    Building <strong>scalable backends</strong> and <strong>GenAI-powered</strong> products with Django.
+    Currently based in <strong>Pune, India</strong> — open to new opportunities.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#about" class="btn-ghost">Learn More <span class="arrow">→</span></a>
+  </div>
+
+  <div class="hero-blob"></div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ════════════════════════════ ABOUT ════════════════════════════ -->
+<div class="section-divider"><hr></div>
+<section id="about">
+  <div class="about-left reveal">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title" style="margin-bottom:28px;">Building the<br><span style="color:var(--glow)">backend</span> of<br>tomorrow.</h2>
+
+    <p class="about-text">
+      I'm a <strong>Python Full Stack Developer</strong> with a passion for clean architecture and AI integration. I love turning complex problems into elegant, performant solutions.
+    </p>
+    <p class="about-text">
+      My focus is on <strong>Django ecosystems</strong>, real-time systems, and embedding <strong>Generative AI</strong> into production-grade products.
+    </p>
+
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      Open to Work — Fresher
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-        <div class="absolute inset-0 bg-gradient-to-br from-red-900/20 to-black"></div>
-        <div class="container mx-auto px-4 text-center relative z-10">
-            <div class="car-animation text-6xl mb-8">
-                <i class="fas fa-laptop-code text-red-500"></i>
-            </div>
-            <div class="mb-8 slide-in-left">
-                <span class="text-2xl md:text-3xl text-gray-400">Hey there! I'm</span>
-                <h1 class="orbitron text-5xl md:text-8xl font-black text-white mt-2 mb-4">
-                    <span class="text-red-500">Nikhil Ambure</span>
-                </h1>
-                <div class="text-3xl md:text-4xl font-bold mb-6">
-                    <span class="typing-effect inline-block">Full Stack Developer</span>
-                </div>
-            </div>
-            <p class="text-lg md:text-lg mb-8 fade-in max-w-2xl mx-auto text-gray-300"> 
-                Leetcoder 🌟  ||  👩‍💻 Full-stack Developer with a love for Django & Python✨.
-            </p>
-            <div class="mt-12 fade-in">
-                <div class="flex justify-center space-x-6">
-                    <a href="https://x.com/N1kh1l_A0" class="text-2xl text-gray-400 hover:text-red-500 transition-colors duration-300">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/nikhil-ambure-8a41a7248/" class="text-2xl text-gray-400 hover:text-red-500 transition-colors duration-300">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://github.com/NikhilAmbure" class="text-2xl text-gray-400 hover:text-red-500 transition-colors duration-300">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="mailto:nikhilambure25@gmail.com" class="text-2xl text-gray-400 hover:text-red-500 transition-colors duration-300">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://leetcode.com/u/N1kh1L_A/" class="text-2xl text-gray-400 hover:text-red-500 transition-colors duration-300" title="LeetCode" target="_blank" rel="noopener">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" role="img" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" class="inline align-middle w-7 h-7">
-                            <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+    <div class="social-row">
+      <a href="https://github.com/NikhilAmbure" target="_blank" class="social-link" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/nikhil-ambure-8a41a7248/" target="_blank" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://x.com/N1kh1l_A0" target="_blank" class="social-link" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+      <a href="https://leetcode.com/u/N1kh1L_A/" target="_blank" class="social-link" aria-label="LeetCode">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.216 3.648 5.261 5.261 0 0 0 1.216 3.648l3.854 4.126 5.405 5.788a1.372 1.372 0 0 0 .961.438 1.372 1.372 0 0 0 .961-.438l5.405-5.788 3.854-4.126a5.266 5.266 0 0 0 1.216-3.648 5.261 5.261 0 0 0-1.216-3.648l-3.854-4.126L14.444.438A1.374 1.374 0 0 0 13.483 0zm-2.406 4.176 5.405 5.788a3.15 3.15 0 0 1 .729 2.184 3.15 3.15 0 0 1-.729 2.184l-5.405 5.788-3.854-4.126a3.15 3.15 0 0 1-.729-2.184 3.15 3.15 0 0 1 .729-2.184l3.854-4.126z"/></svg>
+      </a>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="stat-num">2<span>+</span></div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10<span>+</span></div>
+        <div class="stat-label">Technologies</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Curiosity</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bento-grid reveal" style="transition-delay:0.15s">
+
+    <!-- Avatar + name -->
+    <div class="bento-card" style="grid-column:1/-1">
+      <div class="bento-avatar">
+        <div class="avatar-ring">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" stroke="rgba(0,255,136,0.15)" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="32" cy="2" r="3" fill="var(--glow)" opacity="0.8"/>
+          </svg>
+          <div class="avatar-initials">NA</div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="relative py-20 bg-gradient-to-r from-gray-900 to-black z-[2]">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50 pointer-events-none"></div>
-        <div class="container mx-auto px-4 relative">
-            <h2 class="orbitron text-4xl md:text-5xl font-bold text-center mb-16">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-700">ABOUT</span> ME
-            </h2>
-            <div class="grid lg:grid-cols-3 gap-8 items-center">
-                <!-- Profile Image & Info -->
-                <div class="lg:col-span-1">
-                    <div class="relative group">
-                        <div class="aspect-square rounded-2xl overflow-hidden border-2 border-red-600/30 group-hover:border-red-600 transition-all duration-500">
-                            <div class="w-full h-full bg-gradient-to-br from-red-600/20 to-black relative">
-                                <div class="absolute inset-0 racing-grid opacity-20"></div>     
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <img alt="Story pin image" class="hCL kVc L4E MIw" fetchpriority="auto" loading="auto" src="https://i.pinimg.com/736x/1f/12/bc/1f12bc956510348203996efaa9cfd356.jpg">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1">
-                            <div class="racing-stripe"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Main Content -->
-                <div class="lg:col-span-2 space-y-6">
-                    <div class="mb-2">
-                        <h3 class="orbitron text-3xl md:text-4xl font-bold text-red-500 mb-2">Nikhil Ambure</h3>
-                        <div class="text-xl md:text-2xl font-semibold text-gray-300 mb-2">Full Stack Developer</div>
-                    </div>
-                    <div class="space-y-4 terminal-text text-sm sm:text-lg border-l-2 border-gray-500/50 pl-4">
-                        <p class="flex items-center space-x-4"><span class="typing-animation">LATUR, MAHARASHTRA.</span></p>
-                        <p class="flex items-center space-x-4"><span class="typing-animation">BTECH. COMPUTER SCIENCE</span></p>
-                    </div>
-                    <div class="mt-4 text-red-500 font-bold text-lg">Building. Learning. Accelerating.</div>
-                </div>
-            </div>
+        <div class="avatar-info">
+          <div class="avatar-name">Nikhil Ambure</div>
+          <div class="avatar-role">Python · Django · GenAI</div>
         </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="relative py-20 z-[3]">
-        <div class="container mx-auto px-4">
-            <h2 class="orbitron text-4xl md:text-5xl font-bold text-center mb-16">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-700">TECH</span> SPECS
-            </h2>
-            <div class="terminal-body p-6 bg-gradient-to-br from-gray-900/70 to-black border border-red-600/30 rounded-2xl shadow-lg max-w-5xl mx-auto">
-                <div class="space-y-4">
-                    <p><span class="text-gray-400">$</span> initializing_race_protocol <span class="text-red-500">--tech-specs</span></p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 racing-flag-bg">
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> Python </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300">Django </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> DRF </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> PostgreSQL </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> JavaScript </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> Html </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300">CSS </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> Tailwind CSS </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> Redis </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> RabbitMQ </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> Kafka </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> Docker </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> C </div>    
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300"> Git </div>
-                        <div class="border border-gray-500/30 rounded px-4 py-2 text-center hover:bg-red-600 hover:text-white transition-all duration-300">Render </div>
-                    </div>
-                </div>
-            </div>
+        <div class="status-badge" style="margin-left:auto;flex-shrink:0">
+          <span class="status-dot"></span>
+          Open to Work
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="relative py-20 bg-gradient-to-r from-black to-gray-900 z-[4]">
-        <div class="container mx-auto px-4">
-            <h2 class="orbitron text-4xl md:text-5xl font-bold text-center mb-16">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-700">PROJECT</span> VICTORIES
-            </h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="group">
-                    <div class="project-card relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900/50 to-black border border-red-600/30 hover:border-red-600 transition-all duration-500 transform hover:-translate-y-2">
-                        <div class="absolute inset-0 bg-gradient-to-r from-red-600/20 to-transparent transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
-                        <div class="h-48 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-red-600 to-red-800 speed-blur">
-                                <div class="absolute inset-0 racing-grid opacity-20"></div>
-                            </div>
-                            <div class="relative z-10 h-full flex items-center justify-center">
-                                <i class="fas fa-rocket text-6xl text-white group-hover:scale-110 transition-transform duration-500"></i>
-                            </div>
-                        </div>
-                        <div class="relative z-10 p-6">
-                            <h3 class="text-xl font-bold mb-3">Zeno - eCommerce</h3>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">Django</span>
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">PostgreSQL</span>
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">Python</span>
-                            </div>
-                            <a href="https://zeno-yuvy.onrender.com/" target="_blank" class="block w-full bg-gradient-to-r from-red-600 to-red-800 py-2 rounded-lg font-bold text-center transform hover:translate-y-1 transition-transform duration-300">
-                                VIEW PROJECT
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="group">
-                    <div class="project-card relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900/50 to-black border border-red-600/30 hover:border-red-600 transition-all duration-500 transform hover:-translate-y-2">
-                        <div class="absolute inset-0 bg-gradient-to-r from-red-600/20 to-transparent transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
-                        <div class="h-48 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-red-600 to-red-800 speed-blur">
-                                <div class="absolute inset-0 racing-grid opacity-20"></div>
-                            </div>
-                            <div class="relative z-10 h-full flex items-center justify-center">
-                                <i class="fas fa-mobile-alt text-6xl text-white group-hover:scale-110 transition-transform duration-500"></i>
-                            </div>
-                        </div>
-                        <div class="relative z-10 p-6">
-                            <h3 class="text-xl font-bold mb-3">Zomato</h3>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">Django</span>
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">Kafka</span>
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">PostgreSQL</span>
-                            </div>
-                            <a href="#" class="block w-full bg-gradient-to-r from-red-600 to-red-800 py-2 rounded-lg font-bold text-center transform hover:translate-y-1 transition-transform duration-300">
-                                VIEW PROJECT
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <!-- Location -->
+    <div class="bento-card bento-loc">
+      <div class="bento-loc-label">📍 Based in</div>
+      <div class="bento-loc-value">Pune,<br><span>India</span></div>
+      <div class="bento-map-dots">
+        <div class="map-dot"></div><div class="map-dot"></div><div class="map-dot active"></div>
+        <div class="map-dot"></div><div class="map-dot active"></div><div class="map-dot"></div>
+        <div class="map-dot active"></div><div class="map-dot"></div><div class="map-dot"></div>
+        <div class="map-dot"></div><div class="map-dot active"></div><div class="map-dot active"></div>
+        <div class="map-dot"></div><div class="map-dot"></div><div class="map-dot active"></div>
+      </div>
+    </div>
 
-                <div class="group">
-                    <div class="project-card relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900/50 to-black border border-red-600/30 hover:border-red-600 transition-all duration-500 transform hover:-translate-y-2">
-                        <div class="absolute inset-0 bg-gradient-to-r from-red-600/20 to-transparent transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
-                        <div class="h-48 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-red-600 to-red-800 speed-blur">
-                                <div class="absolute inset-0 racing-grid opacity-20"></div>
-                            </div>
-                            <div class="relative z-10 h-full flex items-center justify-center">
-                                <i class="fas fa-chart-line text-6xl text-white group-hover:scale-110 transition-transform duration-500"></i>
-                            </div>
-                        </div>
-                        <div class="relative z-10 p-6">
-                            <h3 class="text-xl font-bold mb-3">My Portfolio</h3>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">HTML</span>
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">TailwindCSS</span>
-                                <span class="px-3 py-1 rounded-full text-sm bg-red-600/20 text-red-400 border border-red-600/30">JavaScript</span>
-                            </div>
-                            <a href="https://github.com/NikhilAmbure/My_Portfolio" class="block w-full bg-gradient-to-r from-red-600 to-red-800 py-2 rounded-lg font-bold text-center transform hover:translate-y-1 transition-transform duration-300">
-                                VIEW PROJECT
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Currently building -->
+    <div class="bento-card">
+      <div class="bento-focus-title">🔭 Currently exploring</div>
+      <div class="focus-chips">
+        <span class="focus-chip lit">Django</span>
+        <span class="focus-chip lit">GenAI</span>
+        <span class="focus-chip lit">RAG</span>
+        <span class="focus-chip">LLMs</span>
+        <span class="focus-chip">Docker</span>
+        <span class="focus-chip">Redis</span>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <div class="bento-card bento-quote" style="grid-column:1/-1">
+      <div class="quote-mark">"</div>
+      <div class="quote-text">I build things that think — clean backends, real-time systems, and AI that actually ships.</div>
+      <div class="quote-attr">— Nikhil Ambure, dev philosophy</div>
+    </div>
+
+    <!-- Vibe rows -->
+    <div class="bento-card" style="grid-column:1/-1">
+      <div class="bento-vibe">
+        <div class="vibe-row">
+          <div class="vibe-icon">⚡</div>
+          <div class="vibe-text"><strong>Fast learner</strong> — picking up new stacks in days, not months</div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="relative py-20 z-[5] bg-gradient-to-br from-black via-gray-900 to-black">
-        <div class="container mx-auto px-4 flex justify-center">
-            <div class="max-w-xl w-full bg-gradient-to-br from-gray-900/80 to-black border-4 border-red-600/40 rounded-3xl shadow-2xl p-10 text-center racing-grid relative overflow-hidden">
-                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 racing-stripe"></div>
-                <h2 class="orbitron text-4xl md:text-5xl font-bold mb-6 text-red-500">
-                    PIT STOP
-                </h2>
-                <p class="text-lg text-gray-300 mb-8 font-medium">Feel free to reach out through any platform below!</p>
-                <div class="flex justify-center gap-8 mb-6">
-                    <a href="mailto:nikhilambure25@gmail.com" class="group flex flex-col items-center hover:text-red-500 transition-colors duration-300" title="Email">
-                        <i class="fas fa-envelope text-xl text-white mb-1"></i>
-                        <span class="text-sm font-semibold text-gray-300 group-hover:text-red-400">Email</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/nikhil-ambure-8a41a7248/" target="_blank" rel="noopener" class="group flex flex-col items-center hover:text-red-500 transition-colors duration-300" title="LinkedIn">
-                        <i class="fab fa-linkedin text-xl text-white mb-1"></i>
-                        <span class="text-sm font-semibold text-gray-300 group-hover:text-red-400">LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/NikhilAmbure" target="_blank" rel="noopener" class="group flex flex-col items-center hover:text-red-500 transition-colors duration-300" title="GitHub">
-                        <i class="fab fa-github text-xl text-white mb-1"></i>
-                        <span class="text-sm font-semibold text-gray-300 group-hover:text-red-400">GitHub</span>
-                    </a>
-                    <a href="https://x.com/N1kh1l_A0" target="_blank" rel="noopener" class="group flex flex-col items-center hover:text-red-500 transition-colors duration-300" title="Twitter">
-                        <i class="fab fa-twitter text-xl text-white mb-1"></i>
-                        <span class="text-sm font-semibold text-gray-300 group-hover:text-red-400">Twitter</span>
-                    </a>
-                </div>
-                <div class="mt-6 text-gray-500 text-xs">
-                    I usually reply within a day. Looking forward to hearing from you!
-                </div>
-            </div>
+        <div class="vibe-row">
+          <div class="vibe-icon">🤖</div>
+          <div class="vibe-text"><strong>AI-first thinking</strong> — integrating GenAI into real product features</div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black border-t border-red-600/30 py-8">
-        <div class="container mx-auto px-4 text-center">
-            <div class="orbitron text-2xl font-bold text-red-500 mb-4">
-                <i class="fas fa-flag-checkered mr-2"></i>CODER
-            </div>
-            <p class="text-gray-400 mb-4">
-                Racing through code, delivering excellence at every turn.
-            </p>
-            <div class="flex justify-center space-x-6">
-                <a href="https://x.com/N1kh1l_A0" class="text-2xl hover:text-red-500 transition-colors duration-300">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/nikhil-ambure-8a41a7248/" class="text-2xl hover:text-red-500 transition-colors duration-300">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://github.com/NikhilAmbure" class="text-2xl hover:text-red-500 transition-colors duration-300">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-            <div class="mt-6 pt-6 border-t border-red-600/30 text-gray-500">
-                <p>&copy; 2025 All rights reserved.</p>
-            </div>
+        <div class="vibe-row">
+          <div class="vibe-icon">🛠</div>
+          <div class="vibe-text"><strong>Ships things</strong> — from idea to deployed product, not just demos</div>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileNav = document.getElementById('mobile-nav');
-        
-        mobileMenu.addEventListener('click', () => {
-            mobileNav.classList.toggle('-translate-x-full');
-        });
+  </div>
+</section>
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileNav.classList.add('-translate-x-full');
-            });
-        });
+<!-- ════════════════════════════ STACK ════════════════════════════ -->
+<div class="section-divider"><hr></div>
+<section id="stack" style="max-width:1100px;margin:0 auto;">
+  <div class="section-label reveal">Tech Stack</div>
+  <h2 class="section-title reveal">The toolkit<br>I work with.</h2>
 
-        // Smooth scrolling
-        function smoothScroll(target) {
-            const headerOffset = 80; // Height of your fixed header
-            const targetPosition = target.offsetTop - headerOffset;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
+  <div class="skills-terminal reveal">
+    <div class="terminal-bar">
+      <div class="code-dots">
+        <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+      </div>
+      <span class="terminal-bar-title">~/nikhil — zsh</span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-prompt">nikhil@dev <span style="color:var(--blue)">~</span> % <span class="t-cmd">pip list --skills</span></div>
 
-        // Add smooth scrolling to all anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    smoothScroll(target);
-                }
-            });
-        });
+      <div class="skill-group">
+        <div class="skill-group-label">Backend & Databases</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Python</span>
+          <span class="skill-tag primary">Django</span>
+          <span class="skill-tag primary">DRF</span>
+          <span class="skill-tag">Celery</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">SQLite</span>
+          <span class="skill-tag">Redis</span>
+          <span class="skill-tag">RabbitMQ</span>
+          <span class="skill-tag">Kafka</span>
+          <span class="skill-tag">Docker</span>
+        </div>
+      </div>
 
-        // Add smooth scrolling to buttons with data-scroll attribute
-        document.querySelectorAll('button[data-scroll]').forEach(button => {
-            button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('data-scroll'));
-                if (target) {
-                    smoothScroll(target);
-                }
-            });
-        });
+      <div class="skill-group">
+        <div class="skill-group-label">Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">JavaScript (ES6+)</span>
+          <span class="skill-tag">HTML5 / CSS3</span>
+          <span class="skill-tag primary">Tailwind CSS</span>
+          <span class="skill-tag">WebSockets</span>
+        </div>
+      </div>
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+      <div class="skill-group">
+        <div class="skill-group-label">AI / DevOps / Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Gemini API</span>
+          <span class="skill-tag primary">RAG</span>
+          <span class="skill-tag">Git / GitHub</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Vercel</span>
+          <span class="skill-tag">Render</span>
+          <span class="skill-tag">Railway</span>
+          <span class="skill-tag">PgAdmin</span>
+          <span class="skill-tag">Locust</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
+<!-- ════════════════════════════ PROJECTS ════════════════════════════ -->
+<div class="section-divider"><hr></div>
+<section id="projects" style="max-width:1100px;margin:0 auto;">
+  <div class="section-label reveal">Projects</div>
+  <h2 class="section-title reveal">Things I've<br>shipped.</h2>
 
-        // Observe elements for animation
-        document.querySelectorAll('.skill-card, .project-card').forEach(el => {
-            observer.observe(el);
-        });
+  <div class="projects-list reveal">
 
-        // Skill bar animations
-        const skillBars = document.querySelectorAll('.skill-bar');
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const skillBar = entry.target.querySelector('.bg-red-600');
-                    const width = skillBar.style.width;
-                    skillBar.style.width = '0';
-                    setTimeout(() => {
-                        skillBar.style.transition = 'width 2s ease-out';
-                        skillBar.style.width = width;
-                    }, 200);
-                }
-            });
-        }, observerOptions);
+    <!-- InsightDocs AI -->
+    <div class="proj-row">
+      <div class="proj-head">
+        <span class="proj-num">01</span>
+        <div class="proj-name-wrap">
+          <span class="proj-name">InsightDocs AI</span>
+          <span class="proj-badge-inline">Featured</span>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Django</span>
+          <span class="proj-tag">WebSockets</span>
+          <span class="proj-tag">Gemini API</span>
+          <span class="proj-tag">RAG</span>
+          <span class="proj-tag">Redis</span>
+          <span class="proj-tag">PostgreSQL</span>
+        </div>
+        <div class="proj-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="proj-detail">
+        <div class="proj-detail-inner">
+          <div class="proj-detail-content">
+            <p class="proj-desc-text">A SaaS platform for chatting with PDFs using RAG pipelines. Features real-time WebSockets, 2FA/OTP authentication, and Google Gemini integration for intelligent document Q&amp;A.</p>
+            <a href="https://github.com/NikhilAmbure/InsightDocs_AI" target="_blank" class="proj-link-btn">
+              <i class="fa-brands fa-github"></i> View Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        skillBars.forEach(bar => {
-            skillObserver.observe(bar);
-        });
+    <!-- Zeno -->
+    <div class="proj-row">
+      <div class="proj-head">
+        <span class="proj-num">02</span>
+        <div class="proj-name-wrap">
+          <span class="proj-name">Zeno</span>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Django</span>
+          <span class="proj-tag">Tailwind CSS</span>
+          <span class="proj-tag">Razorpay API</span>
+        </div>
+        <div class="proj-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="proj-detail">
+        <div class="proj-detail-inner">
+          <div class="proj-detail-content">
+            <p class="proj-desc-text">Robust e-commerce platform with a complete shopping experience — secure Razorpay payment integration, user authentication, and full order management system.</p>
+            <a href="https://github.com/NikhilAmbure/Zeno" target="_blank" class="proj-link-btn">
+              <i class="fa-brands fa-github"></i> View Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // Dynamic racing background effect
-        function createRacingLine() {
-            const line = document.createElement('div');
-            line.className = 'fixed top-0 w-1 bg-red-500 opacity-20 pointer-events-none';
-            line.style.height = '100vh';
-            line.style.left = Math.random() * 100 + 'vw';
-            line.style.animation = 'racing-line 3s linear forwards';
-            document.body.appendChild(line);
-            
-            setTimeout(() => {
-                line.remove();
-            }, 3000);
-        }
+  </div>
+</section>
 
-        // Add CSS for racing line animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes racing-line {
-                from {
-                    transform: translateX(-100vw);
-                }
-                to {
-                    transform: translateX(100vw);
-                }
-            }
-        `;
-        document.head.appendChild(style);
+<!-- ════════════════════════════ CONTACT ════════════════════════════ -->
+<div class="section-divider"><hr></div>
+<section id="contact">
+  <div class="contact-glow"></div>
 
-        // Create racing lines periodically
-        setInterval(createRacingLine, 2000);
+  <div class="section-label reveal" style="justify-content:center">Contact</div>
+  <h2 class="contact-big reveal">
+    Let's<br><span class="outline">Work</span><br>Together<span style="color:var(--glow)">.</span>
+  </h2>
+  <p class="contact-sub reveal">
+    I'm actively looking for my first role. If you have an opportunity or just want to talk tech — reach out.
+  </p>
 
-        // Add typing effect restart
-        function restartTypingEffect() {
-            const typingElement = document.querySelector('.typing-effect');
-            if (typingElement) {
-                typingElement.style.width = '0';
-                typingElement.style.animation = 'none';
-                setTimeout(() => {
-                    typingElement.style.animation = 'typing 3s steps(30) 1s forwards, blink 1s infinite';
-                }, 100);
-            }
-        }
+  <div class="reveal">
+    <a href="mailto:nikhilambure25@gmail.com" class="contact-email">
+      <i class="fa-regular fa-envelope"></i>
+      nikhilambure25@gmail.com
+    </a>
+  </div>
 
-        // Restart typing effect every 10 seconds
-        setInterval(restartTypingEffect, 10000);
+  <div class="footer-bottom reveal">
+    <span>© 2026 Nikhil Ambure. All rights reserved.</span>
+    <div class="footer-socials">
+      <a href="https://github.com/NikhilAmbure" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="https://www.linkedin.com/in/nikhil-ambure-8a41a7248/" target="_blank"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+      <a href="https://x.com/N1kh1l_A0" target="_blank"><i class="fa-brands fa-twitter"></i> Twitter</a>
+      <a href="https://leetcode.com/u/N1kh1L_A/" target="_blank">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="flex-shrink:0"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.216 3.648 5.261 5.261 0 0 0 1.216 3.648l3.854 4.126 5.405 5.788a1.372 1.372 0 0 0 .961.438 1.372 1.372 0 0 0 .961-.438l5.405-5.788 3.854-4.126a5.266 5.266 0 0 0 1.216-3.648 5.261 5.261 0 0 0-1.216-3.648l-3.854-4.126L14.444.438A1.374 1.374 0 0 0 13.483 0zm-2.406 4.176 5.405 5.788a3.15 3.15 0 0 1 .729 2.184 3.15 3.15 0 0 1-.729 2.184l-5.405 5.788-3.854-4.126a3.15 3.15 0 0 1-.729-2.184 3.15 3.15 0 0 1 .729-2.184l3.854-4.126z"/></svg>
+        LeetCode
+      </a>
+    </div>
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--muted)">Built with ♥ in Pune</span>
+  </div>
+</section>
+</main>
 
-        // Add speed effect to project cards on hover
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                const speedDiv = card.querySelector('.speed-blur');
-                if (speedDiv) {
-                    speedDiv.style.animation = 'speed-effect 0.8s ease-out';
-                }
-            });
-        });
+<script>
+  // ── Custom Cursor ──
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursor-ring');
+  let mx = -100, my = -100, rx = -100, ry = -100;
 
-        // Add dynamic glow effect to navigation
-        const nav = document.querySelector('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                nav.classList.add('neon-glow');
-            } else {
-                nav.classList.remove('neon-glow');
-            }
-        });
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
-        // Add click effect to buttons
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                let ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                this.appendChild(ripple);
+  function animCursor() {
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
 
-                let x = e.clientX - e.target.offsetLeft;
-                let y = e.clientY - e.target.offsetTop;
+  // ── Scroll Reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
 
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-
-        // Add ripple effect CSS
-        const rippleStyle = document.createElement('style');
-        rippleStyle.textContent = `
-            .ripple {
-                position: absolute;
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple-animation 0.6s linear;
-                background-color: rgba(255, 255, 255, 0.3);
-            }
-            
-            @keyframes ripple-animation {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-            
-            button {
-                position: relative;
-                overflow: hidden;
-            }
-        `;
-        document.head.appendChild(rippleStyle);
-
-        // Add form validation
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = this.querySelector('input[type="text"]').value;
-            const email = this.querySelector('input[type="email"]').value;
-            const message = this.querySelector('textarea').value;
-            
-            if (!name || !email || !message) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            // Simulate form submission
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'SENDING...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.textContent = 'MESSAGE SENT!';
-                submitBtn.style.backgroundColor = '#16a34a';
-                
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.style.backgroundColor = '';
-                    submitBtn.disabled = false;
-                    form.reset();
-                }, 2000);
-            }, 1500);
-        });
-
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // Add loading screen
-        window.addEventListener('load', () => {
-            const loader = document.createElement('div');
-            loader.id = 'loader';
-            loader.innerHTML = `
-                <div class="fixed inset-0 bg-black z-50 flex items-center justify-center">
-                    <div class="text-center">
-                        <div class="text-6xl text-red-500 mb-4 car-animation">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        <div class="orbitron text-2xl text-white mb-4">LOADING...</div>
-                        <div class="racing-stripe w-32 h-1 mx-auto"></div>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(loader);
-        });
-    </script>
+  // ── Typing effect for hero subtitle ──
+  const heroSub = document.querySelector('.hero-sub');
+  if (heroSub) {
+    const cursor2 = document.createElement('span');
+    cursor2.className = 'type-cursor';
+    heroSub.appendChild(cursor2);
+    setTimeout(() => cursor2.remove(), 4000);
+  }
+</script>
 </body>
 </html>
